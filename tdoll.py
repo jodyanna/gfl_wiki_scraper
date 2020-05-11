@@ -13,7 +13,6 @@ CRAWL_DELAY = 20
 
 
 def main():
-    # set up
     print("Now scraping...")
     init_save_files(["saves/tdoll_data.json", "saves/tdoll_data.csv"])
     names = get_tdoll_names("https://en.gfwiki.com/wiki/T-Doll_Index")
@@ -23,7 +22,7 @@ def main():
 
 def scrape_n_save(names):
     """Get and parse html data into dictionary then write to file for each entry in 'names' list."""
-    for i in range(len(names) - 317):
+    for i in range(len(names)):
         print(names[i])
         tdoll_url = "https://en.gfwiki.com/wiki/" + names[i].replace(" ", "_")
         soup = get_html(tdoll_url)
@@ -31,11 +30,12 @@ def scrape_n_save(names):
         try:
             tdoll_data = {"id": get_id(soup), "name": names[i].replace(" ", "_"), "wclass": get_wclass(soup),
                           "rarity": get_rarity(soup), "hp": get_hp(soup), "ammo_cost": get_ammo_cost(soup),
-                          "ration_cost": get_ration_cost(soup), "damage": get_damage(soup), "evasion": get_evasion(soup),
-                          "accuracy": get_accuracy(soup), "rof": get_rof(soup), "move_speed": get_move_speed(soup),
-                          "crit_rate": get_crit_rate(soup), "crit_damage": get_crit_damage(soup),
-                          "armor_pen": get_armor_pen(soup), "aura_tiles": get_aura_tiles(soup),
-                          "aura_targets": get_aura_targets(soup), "aura_buffs": get_aura_buffs(soup)}
+                          "ration_cost": get_ration_cost(soup), "damage": get_damage(soup),
+                          "evasion": get_evasion(soup), "accuracy": get_accuracy(soup), "rof": get_rof(soup),
+                          "move_speed": get_move_speed(soup), "crit_rate": get_crit_rate(soup),
+                          "crit_damage": get_crit_damage(soup), "armor_pen": get_armor_pen(soup),
+                          "aura_tiles": get_aura_tiles(soup), "aura_targets": get_aura_targets(soup),
+                          "aura_buffs": get_aura_buffs(soup)}
             tdoll_data["armor"] = get_armor(tdoll_data["wclass"], soup)
             tdoll_data["mag_size"] = get_mag_size(tdoll_data["wclass"], soup)
             tdoll_data["aura_buff_vals"] = get_aura_buff_vals(tdoll_data["wclass"], soup)
